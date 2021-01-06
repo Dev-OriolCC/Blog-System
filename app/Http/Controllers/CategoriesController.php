@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+// IMPORT MODEL
+use App\Category;
+
 use Illuminate\Http\Request;
+// USE CUSTOM REQUEST
+use App\Http\Requests\CreateCategoryRequest;
 
 class CategoriesController extends Controller
 {
@@ -14,7 +19,8 @@ class CategoriesController extends Controller
     public function index()
     {
         // Default view for Categories
-        return view('categories.index');
+        // Return VIEW with all Categories
+        return view('categories.index')->with('categories', Category::all());
         
     }
 
@@ -25,6 +31,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+        
         return view('categories.create');
     }
 
@@ -34,9 +41,19 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        //
+        // VALIDATE DATA BEFORE STORE IN DB
+
+        // STORE DATA IN DB
+        // PROVIDE FILLABLE PROP
+        Category::create([
+            'name' => $request->name
+        ]);
+        // Return FLASH MESSAGE
+        session()->flash('success', 'Category Created Successfully🙂');
+
+        return redirect(route('categories.index'));
     }
 
     /**
@@ -56,9 +73,9 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit(Category $category)
+    {   // Return the Edit from with parameter
+        return view('categories.create')->with('category', $category);
     }
 
     /**
