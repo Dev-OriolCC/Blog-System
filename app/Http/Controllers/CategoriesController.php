@@ -7,7 +7,8 @@ use App\Category;
 
 use Illuminate\Http\Request;
 // USE CUSTOM REQUEST
-use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\Categories\UpdateCategoriesRequest;
 
 class CategoriesController extends Controller
 {
@@ -85,9 +86,13 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(UpdateCategoriesRequest $request , Category $category)
+    {   // REQUEST FIRST THEN DYNAMIC PARAMETER
+        $category->update([
+            'name' => $request->name
+        ]);
+        session()->flash('success', 'Category Saved Successfully🙂👍'); // MESSAGE TO DISPLAY
+        return redirect(route('categories.index')); // RETURN TO MENU
     }
 
     /**
@@ -96,8 +101,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        session()->flash('success', 'Category Deleted Successfully 🗑');
+        return redirect(route('categories.index'));
     }
 }
