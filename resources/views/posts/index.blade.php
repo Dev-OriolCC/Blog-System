@@ -11,12 +11,19 @@
         <div class="card-body">
             <table class="table">
                 <thead class="bg-success">
-                    <th class="text-center">Name</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th></th>
                     <th></th>
                 </thead>
                 <tbody>
-                    <th>1</th>
-                    <th>2</th>
+                    @foreach($posts as $post)
+                        <tr>
+                        <!-- http://localhost/blog-system/public/storage/posts/4g3B40ZxXbclt0MN0PQRgiAQcH9GDTyggkzSDEgH.jpg -->
+                            <td><img src="http://localhost/blog-system/public/storage/{{ $post->image }}" width="180px" height="100px" alt=""></td>
+                            <td>{{$post->title}}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

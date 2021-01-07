@@ -6,6 +6,8 @@ use App\Http\Requests\Posts\CreatePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\all;
+
 class PostsController extends Controller
 {
     /**
@@ -15,7 +17,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        return view('posts.index')->with('posts', Post::all());
     }
 
     /**
