@@ -9,23 +9,27 @@
             Categories
         </div>
         <div class="card-body">
-            <table class="table">
-                <thead class="bg-success">
-                    <th class="text-center">Name</th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    @foreach($categories as $category)
-                        <tr class="bg-light">
-                            <td>{{$category->name}}</td>
-                            <td align="right">
-                                <a href="{{route('categories.edit', $category->id)}}" class="btn btn-primary">Edit</a>
-                                <button class="btn btn-danger" onclick="HandleDelete({{ $category->id}} )">Delete</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            @if($categories->count() > 0)
+                <table class="table">
+                    <thead class="bg-success">
+                        <th class="text-center">Name</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        @foreach($categories as $category)
+                            <tr class="bg-light">
+                                <td>{{$category->name}}</td>
+                                <td align="right">
+                                    <a href="{{route('categories.edit', $category->id)}}" class="btn btn-primary">Edit</a>
+                                    <button class="btn btn-danger" onclick="HandleDelete({{ $category->id}} )">Delete</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <h3 class="text-center">No Categories to display 😥</h3>
+            @endif
         </div>
     </div>
     <!-- CUSTOM MODAL -->

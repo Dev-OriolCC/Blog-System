@@ -9,7 +9,8 @@
             Posts
         </div>
         <div class="card-body">
-            <table class="table">
+        @if($posts->count() > 0)
+        <table class="table">
                 <thead class="bg-success">
                     <th>Image</th>
                     <th>Title</th>
@@ -22,10 +23,24 @@
                         <!-- http://localhost/blog-system/public/storage/posts/4g3B40ZxXbclt0MN0PQRgiAQcH9GDTyggkzSDEgH.jpg -->
                             <td><img src="http://localhost/blog-system/public/storage/{{ $post->image }}" width="180px" height="100px" alt=""></td>
                             <td>{{$post->title}}</td>
+                            <td>
+                                @if (!$post->trashed())
+                                    <button class="btn btn-success">Edit</button></td>
+                                @endif
+                            <td>
+                                <form action="{{route('posts.destroy', $post->id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"> {{ $post->trashed() ? 'Delete' : 'Trash' }} </button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+        @else
+            <h3 class="text-center">No Posts to display 😔😥</h3>
+        @endif
         </div>
     </div>
 @endsection 

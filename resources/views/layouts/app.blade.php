@@ -92,6 +92,12 @@
                                     <a href="{{ route('categories.index') }}">Categories</a>
                                 </li>
                             </ul>
+
+                            <ul class="list-group mt-5">
+                                <li class="list-group-item bg-danger">
+                                    <a href="{{route('trashed-posts.index')}}" class="text-white">Trash Posts</a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="col-md-8">
                             @yield('content')

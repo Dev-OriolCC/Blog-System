@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Posts\CreatePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use function GuzzleHttp\Promise\all;
 
@@ -95,6 +96,24 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+        if ($post->trashed()) {
+            Storage::delete($post->image);
+            $post->forceDelete();
+            session()->flash('success', 'Post Deleted Successfully 😃');
+        }else{
+            $post->delete();
+            session()->flash('success', 'Post Trashed Successfully 😃');
+        }
+        return redirect(route('posts.index'));
+    }
+    //TRASH
+    /** 
+    * @return \Illuminate\Http\Response
+    */
+    public function trashed(){
+        // Fetch Trash Post
+        $trashed = Post::onlyTrashed()->get();
+        return view('posts.index')->withPosts($trashed);
     }
 }
