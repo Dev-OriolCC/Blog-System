@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card card-default">
-        <div class="card-header">Create Post</div>
+        <div class="card-header">{{ isset($post) ? 'Edit Post' : 'Create Post' }}</div>
         <div class="card-body bg-light">
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -20,23 +20,28 @@
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" id="title" name="title" placeholder="Enter Title" class="form-control">
+                    <input type="text" id="title" name="title" placeholder="Enter Title" class="form-control" value="{{ isset($post) ? $post->title : '' }}">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" placeholder="Enter Description" cols="3" rows="5" class="form-control" ></textarea>
+                    <textarea name="description" id="description" placeholder="Enter Description" cols="3" rows="5" class="form-control" 
+                    value="{{ isset($post) ? $post->description : '' }}" ></textarea>
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea name="content" id="content" placeholder="Enter Content" cols="10" rows="10" class="form-control"></textarea>
+                    <input id="content" type="hidden" name="content" value="{{ isset($post) ? $post->content : '' }}">
+                    <trix-editor input="content"></trix-editor>
                 </div>
                 <div class="form-group">
+                @if (isset($post))
+                    <img src="{{ asset($post->image)}}" style="width: 100%;" >
+                @endif
                     <label for="image">Image</label>
                     <input type="file" id="image" name="image" placeholder="Enter Image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="published_at">Publish at</label>
-                    <input type="text" id="published_at" name="published_at"  class="form-control">
+                    <input type="text" id="published_at" name="published_at"  class="form-control" value="{{ isset($post) ? $post->published_at : '' }}">
                 </div>
 
                 <div class="form-group" align="right">
@@ -45,4 +50,20 @@
             </form>
         </div>
     </div>
+@endsection
+@section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css" integrity="sha512-5m1IeUDKtuFGvfgz32VVD0Jd/ySGX7xdLxhqemTmThxHdgqlgPdupWoSN8ThtUSLpAGBvA8DY2oO7jJCrGdxoA==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+@endsection
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr('#published_at', {
+        enableTime: true
+    });
+</script>
+
+    
 @endsection
