@@ -16,7 +16,10 @@
                 </div>
             @endif
         
-            <form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{isset($post) ? route('posts.update', $post->id) : route('posts.store')}}" method="POST" enctype="multipart/form-data">
+                @if(isset($post))
+                    @method('PUT')
+                @endif
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -24,8 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" placeholder="Enter Description" cols="3" rows="5" class="form-control" 
-                    value="{{ isset($post) ? $post->description : '' }}" ></textarea>
+                    <textarea name="description" id="description" placeholder="Enter Description" cols="3" rows="5" class="form-control">{{ isset($post) ? $post->description : '' }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
@@ -34,7 +36,7 @@
                 </div>
                 <div class="form-group">
                 @if (isset($post))
-                    <img src="{{ asset($post->image)}}" style="width: 100%;" >
+                    <img src="http://localhost/blog-system/public/storage/{{ $post->image }}" style="width: 100%;" >
                 @endif
                     <label for="image">Image</label>
                     <input type="file" id="image" name="image" placeholder="Enter Image" class="form-control">
@@ -45,7 +47,7 @@
                 </div>
 
                 <div class="form-group" align="right">
-                    <button type="submit" class="btn btn-success">Create Post</button>
+                    <button type="submit" class="btn btn-success">{{ isset($post) ? 'Save Post' : 'Create Post' }}</button>
                 </div>
             </form>
         </div>
