@@ -14,6 +14,7 @@
                 <thead class="bg-success">
                     <th>Image</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th></th>
                     <th></th>
                 </thead>
@@ -23,9 +24,17 @@
                         <!-- http://localhost/blog-system/public/storage/posts/4g3B40ZxXbclt0MN0PQRgiAQcH9GDTyggkzSDEgH.jpg -->
                             <td><img src="http://localhost/blog-system/public/storage/{{ $post->image }}" width="180px" height="100px" alt=""></td>
                             <td>{{$post->title}}</td>
+                            <td>{{$post->category->name}}</td>
                             <td>
                                 @if (!$post->trashed())
                                     <a href="{{route('posts.edit', $post->id)}}" class="btn btn-success">Edit</a>
+                                @else
+                                <form action="{{route('restore-posts', $post->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                        <button type="submit" class="btn btn-success">Restore</button>
+                                </form>
+                                    
                                 @endif
                             </td>
                             <td>

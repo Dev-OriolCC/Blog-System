@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\Posts\CreatePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Post;
@@ -29,7 +30,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create')->with('categories', Category::all());
     }
 
     /**
@@ -48,6 +49,7 @@ class PostsController extends Controller
             'description' => $request->description,
             'content' => $request->content,
             'image' => $image,
+            'category_id' => $request->category,
             'published_at' => $request->published_at
         ]);
         // FLASH MSG
@@ -76,7 +78,7 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
         //
-        return view('posts.create')->with('post', $post);
+        return view('posts.create')->with('post', $post)->with('categories', Category::all());
     }
 
     /**
@@ -92,9 +94,10 @@ class PostsController extends Controller
         $data = $request->only(['title', 'description', 'content', 'published_at']);
         if ($request->hasFile('image') ) {
             $image = $request->image->store('posts');
-            Storage::delete($post->image);
+            $post->DeleteImage();    //Storage::delete($post->image);
             $data['image'] = $image;
         }
+        $data['category_id'] = $request->category;
         $post->update($data);
         session()->flash('success', 'Post Saved Successfully🙂👍'); // MESSAGE TO DISPLAY
         return redirect(route('posts.index')); // RETURN TO MENU
@@ -110,7 +113,7 @@ class PostsController extends Controller
     {
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
         if ($post->trashed()) {
-            Storage::delete($post->image);
+            $post->DeleteImage();   //Storage::delete($post->image);
             $post->forceDelete();
             session()->flash('success', 'Post Deleted Successfully 😃');
         }else{
@@ -127,5 +130,12 @@ class PostsController extends Controller
         // Fetch Trash Post
         $trashed = Post::onlyTrashed()->get();
         return view('posts.index')->withPosts($trashed);
+    }
+    //
+    public function restore($id){
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+        $post->restore();
+        session()->flash('success', 'Post Restored Successfully🙂👍'); // MESSAGE TO DISPLAY
+        return redirect(route('posts.index')); // RETURN TO MENU
     }
 }

@@ -13,12 +13,14 @@
                 <table class="table">
                     <thead class="bg-success">
                         <th class="text-center">Name</th>
+                        <th>Posts #</th>
                         <th></th>
                     </thead>
                     <tbody>
                         @foreach($categories as $category)
                             <tr class="bg-light">
                                 <td>{{$category->name}}</td>
+                                <td>{{$category->posts->count() }}</td>
                                 <td align="right">
                                     <a href="{{route('categories.edit', $category->id)}}" class="btn btn-primary">Edit</a>
                                     <button class="btn btn-danger" onclick="HandleDelete({{ $category->id}} )">Delete</button>

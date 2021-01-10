@@ -42,6 +42,21 @@
                     <input type="file" id="image" name="image" placeholder="Enter Image" class="form-control">
                 </div>
                 <div class="form-group">
+                    <label for="category">Category</label>
+                    <select name="category" id="category" class="form-control">
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}" 
+                        @if(isset($post))
+                            @if($category->id == $post->category->id)
+                                selected
+                            @endif
+                        @endif
+                        >{{$category->name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="published_at">Publish at</label>
                     <input type="text" id="published_at" name="published_at"  class="form-control" value="{{ isset($post) ? $post->published_at : '' }}">
                 </div>
