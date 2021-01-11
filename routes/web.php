@@ -19,13 +19,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-// Add  all routes for Categories
-Route::resource('categories', 'CategoriesController');
-// Add all routes for Posts
-Route::resource('posts', 'PostsController');
-// TRASH
-Route::get('trashed-posts', 'PostsController@trashed')->name('trashed-posts.index');
-// RESTORE TRASH
-Route::put('restore-posts/{post}', 'PostsController@restore')->name('restore-posts');
+// Middleware group to apply AUTH to diferent routes...
+Route::middleware('auth')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    // Add  all routes for Categories
+    Route::resource('categories', 'CategoriesController');
+    // Add all routes for Tags
+    Route::resource('tags', 'TagsController');
+    // Add all routes for Posts
+    Route::resource('posts', 'PostsController');
+    // TRASH
+    Route::get('trashed-posts', 'PostsController@trashed')->name('trashed-posts.index');
+    // RESTORE TRASH
+    Route::put('restore-posts/{post}', 'PostsController@restore')->name('restore-posts');
+});

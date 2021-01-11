@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Middleware\VerifyCategoriesCount;
 use App\Http\Requests\Posts\CreatePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Post;
@@ -13,6 +14,11 @@ use function GuzzleHttp\Promise\all;
 
 class PostsController extends Controller
 {
+    // Constructor to apply a single MiddleWare
+    public function __construct(){
+        $this->middleware('verifyCategoryCount')->only(['create', 'store']);
+    }
+
     /**
      * Display a listing of the resource.
      *
