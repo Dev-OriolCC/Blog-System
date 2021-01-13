@@ -33,3 +33,6 @@ Route::middleware('auth')->group(function () {
     // RESTORE TRASH
     Route::put('restore-posts/{post}', 'PostsController@restore')->name('restore-posts');
 });
+Route::middleware(['auth'])->group(function(){
+    Route::get('users', 'UsersController@index')->name('users.index');
+});

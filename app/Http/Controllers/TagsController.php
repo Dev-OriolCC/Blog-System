@@ -103,6 +103,16 @@ class TagsController extends Controller
      */
     public function destroy(Tag $tag)
     {
+        if ($tag->posts->count() > 0) {
+            $number = $tag->posts->count();
+            if ($number > 2) {
+                session()->flash('error', 'Tag cannot be deleted, Because it has '.$number.' of Post`s Associated.. 😔'); 
+            }else{
+                session()->flash('error', 'Tag cannot be deleted, Because it has '.$number.' Post Associated.. 😔'); 
+            }
+            
+            return redirect()->back();
+        }
         $tag->delete();
         session()->flash('success', 'Tag Deleted Successfully ✔');
         return redirect(route('tags.index'));

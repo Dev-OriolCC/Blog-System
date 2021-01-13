@@ -103,6 +103,15 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+        if ($category->posts->count() > 0) {
+            $number = $category->posts->count();
+            if ($number > 1) {
+                session()->flash('error', 'Category cannot be Deleted, Because '.$number.' Post`s are associated to it');
+            }else{
+                session()->flash('error', 'Category cannot be Deleted, Because '.$number.' Post is associated to it');
+            }
+            return redirect()->back();
+        }
         $category->delete();
         session()->flash('success', 'Category Deleted Successfully 🗑');
         return redirect(route('categories.index'));
