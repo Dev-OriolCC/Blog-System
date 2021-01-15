@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\UpdateUsersRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,13 @@ class UsersController extends Controller
     public function edit(){
         return view('users.edit')->with('user', auth()->user());
     }
-    public function update(){
+    public function update(UpdateUsersRequest $request){
+        $user = auth()->user();
+        $user->update([
+            'name' => $request->name,
+            'about' => $request->about
+        ]);
+        session()->flash('success', ' '.$user->name.' Updated Successfully 😀');
         return redirect(route('users.index'));
     }
 }
