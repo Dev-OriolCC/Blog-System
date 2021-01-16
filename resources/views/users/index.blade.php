@@ -8,7 +8,8 @@
         </div>
         <div class="card-body">
         @if($users->count() > 0)
-        <table class="table">
+        <div class="table-responsive">
+            <table class="table">
                 <thead class="bg-success">
                     <th>Avatar</th>
                     <th>Name</th>
@@ -26,7 +27,7 @@
                             @if(!$user->isAdmin())
                                 <form action="{{Route('users.make-admin', $user->id) }}" method="POST">
                                 @csrf
-                                    <button type="submit" class="btn btn-success">Make Admin</button>                                
+                                    <button type="submit" class="btn btn-sm btn-success">Make Admin</button>                                
                                 </form>
                             @endif
                             </td>
@@ -37,6 +38,7 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
         @else
             <h3 class="text-center">No Users to display 😔😥</h3>
         @endif

@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         // Uncomment to call Seeder
         $this->call(UsersTableSeeder::class);
+        $this->call(PostsTableSeeder::class);
     }
 }

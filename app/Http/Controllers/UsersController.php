@@ -16,7 +16,7 @@ class UsersController extends Controller
     public function makeAdmin(User $user){
         $user->role = 'admin';
         $user->save();
-        session()->flash('success', 'Admin Created Successfully🙂👍'); // MESSAGE TO DISPLAY
+        session()->flash('success', ' '.$user->name.' Is Now a Admin Created Successfully🙂👍'); // MESSAGE TO DISPLAY
         return redirect(route('users.index'));
     }
 

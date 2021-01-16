@@ -19,7 +19,7 @@ class VerifyCategoriesCount
         // Condition
         if (Category::all()->count() == 0) {
             // FLASH MSG
-            session()->flash('error', 'You need to create a Category to able to add a Post');
+            session()->flash('error', 'You need to create a Category to able to add a Post 😔');
             return redirect(route('categories.index'));
         }
         return $next($request);

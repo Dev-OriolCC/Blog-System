@@ -155,7 +155,7 @@ class PostsController extends Controller
     public function restore($id){
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
         $post->restore();
-        session()->flash('success', 'Post Restored Successfully🙂👍'); // MESSAGE TO DISPLAY
+        session()->flash('success', 'Post '.$post->name.' Restored Successfully🙂👍'); // MESSAGE TO DISPLAY
         return redirect(route('posts.index')); // RETURN TO MENU
     }
 }

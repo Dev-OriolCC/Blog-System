@@ -91,7 +91,7 @@ class TagsController extends Controller
         $tag->update([
             'name' => $request->name
         ]);
-        session()->flash('success', 'Tag Saved Successfully🙂👍'); // MESSAGE TO DISPLAY
+        session()->flash('success', 'Tag '.$tag->name.' Saved Successfully🙂👍'); // MESSAGE TO DISPLAY
         return redirect(route('tags.index')); // RETURN TO MENU
     }
 
