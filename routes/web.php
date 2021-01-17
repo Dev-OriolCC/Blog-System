@@ -12,11 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// WELCOME ROUTE
+Route::get('/', 'WelcomeController@index');
+//  AUTH
 Auth::routes();
 
 // Middleware group to apply AUTH to diferent routes...
@@ -33,7 +31,7 @@ Route::middleware('auth')->group(function () {
     // RESTORE TRASH
     Route::put('restore-posts/{post}', 'PostsController@restore')->name('restore-posts');
 });
-//
+// 
 Route::middleware(['auth', 'verifyIsAdmin'])->group(function(){
     Route::get('users', 'UsersController@index')->name('users.index');
     Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
