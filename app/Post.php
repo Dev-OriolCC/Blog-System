@@ -11,7 +11,7 @@ class Post extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'title', 'description', 'content', 'published_at', 'image', 'category_id'
+        'title', 'description', 'content', 'published_at', 'image', 'category_id', 'user_id'
     ];
 
     public function DeleteImage(){
@@ -28,5 +28,9 @@ class Post extends Model
     // CHECK TAGS ID
     public function hasTag($tagId){
         return in_array($tagId, $this->tags->pluck('id')->toArray());
+    }
+    //RELATION WITH USER
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Blog\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // WELCOME ROUTE
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'WelcomeController@index')->name('welcome');
+Route::get('blog/posts/{post}', [PostController::class, 'show'])->name('blog.show');
+
+
 //  AUTH
 Auth::routes();
 

@@ -9,6 +9,7 @@ use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 use function GuzzleHttp\Promise\all;
@@ -59,6 +60,7 @@ class PostsController extends Controller
             'content' => $request->content,
             'image' => $image,
             'category_id' => $request->category,
+            'user_id' => auth()->user()->id,
             'published_at' => $request->published_at
         ]);
         // 
