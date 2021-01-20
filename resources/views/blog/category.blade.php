@@ -9,7 +9,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto">
-            <h1>Welcome to Oriol's Blog</h1>
+            <h1>{{ $category->name }}</h1>
             <p class="lead-2 opacity-90 mt-6">Read and get updated on how we progress here...</p>
         </div>
       </div>

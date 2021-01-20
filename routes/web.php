@@ -16,6 +16,9 @@ use App\Http\Controllers\Blog\PostController;
 // WELCOME ROUTE
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('blog/posts/{post}', [PostController::class, 'show'])->name('blog.show');
+// TAG AND CATEGORY ROUTE [PUBLIC]
+Route::get('blog/categories/{category}', [PostController::class, 'category'])->name('blog.category');
+Route::get('blog/tags/{tag}', [PostController::class, 'tag'])->name('blog.tag');
 
 
 //  AUTH
