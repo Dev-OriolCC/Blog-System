@@ -13,7 +13,13 @@ This application will have functionality from the client side and admin.
 * **Oriol Cortez Cesar** - *Full work* - [Dev-OriolCC](https://github.com/Dev-OriolCC)
 
 ## Screenshots and gifs 📸
-Coming Soon....
+<p align="center">
+    <img src="SR_1.jpg" width="400">
+    <img src="SR_2.jpg" width="400">
+    <img src="SR_3.jpg" width="400">
+    <img src="SR_4.jpg" width="400">
+    <img src="SR_5.jpg" widh="400"> 
+</p>
 
 ## Instructions to run 😉
 
