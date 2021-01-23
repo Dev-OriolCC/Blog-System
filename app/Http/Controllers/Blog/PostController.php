@@ -16,17 +16,10 @@ class PostController extends Controller
     }
     // CAT METHOD
     public function category(Category $category){
-    $search = request()->query('search');
-    if ($search) {
-        # Search in specific Category
-        $posts = $category->posts()->where('title', 'LIKE', "%{$search}")->paginate(4);
-    }else{
-        $posts = $category->posts()->paginate(4);
-    }
 
         return view('blog.category')
             ->with('category', $category)
-            ->with('posts', $posts)
+            ->with('posts', $category->posts()->searched()->paginate(2))
             ->with('categories', Category::all())
             ->with('tags', Tag::all());
     }
@@ -34,8 +27,10 @@ class PostController extends Controller
     public function tag(Tag $tag){
         return view('blog.tag')
             ->with('tag', $tag)
-            ->with('posts', $tag->posts()->paginate(4))
+            ->with('posts', $tag->posts()->searched()->paginate(4))
             ->with('categories', Category::all())
             ->with('tags', Tag::all());
     }
+
+
 }

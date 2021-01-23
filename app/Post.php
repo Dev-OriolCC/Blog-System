@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 class Post extends Model
 {
     use SoftDeletes;
+    // Date Variable
+    protected $dates = ['published_at'];
     
     protected $fillable = [
         'title', 'description', 'content', 'published_at', 'image', 'category_id', 'user_id'
@@ -33,4 +35,19 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    // LARAVEL SCOPE SEARCHED
+    public function scopeSearched($query){
+        $search = request()->query('search');
+
+        if(!$search){
+            return $query->publish();
+        }
+
+        return $query->publish()->where('title', 'LIKE', "%{$search}%");
+    }
+    // LARAVEL SCOPE PUBLISH
+    public function scopePublish($query){
+        return $query->where('published_at', '<=', now());
+    }
+
 }

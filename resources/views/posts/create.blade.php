@@ -82,7 +82,8 @@
 
 <script>
     flatpickr('#published_at', {
-        enableTime: true
+        enableTime: true,
+        enableSeconds: true
     });
     // Select2
     
